@@ -45,26 +45,25 @@ class MegJsontoolkitTest < MiniTest::Unit::TestCase
     assert_kind_of Hash, hash
     assert_equal result, hash
 
-    result = {}
     input = {:key => nil, :collection => [1,2,3]}
     hash = Meg::Jsontoolkit.relation_json(input[:key], input[:collection])
     assert_kind_of Hash, hash
-    assert_equal result, hash
+    assert_equal {}, hash
 
     input = {:key => 'fasd', :collection => nil}
     hash = Meg::Jsontoolkit.relation_json(input[:key], input[:collection])
     assert_kind_of Hash, hash
-    assert_equal result, hash
+    assert_equal {}, hash
 
     input = {:key => 'fasd', :collection => []}
     hash = Meg::Jsontoolkit.relation_json(input[:key], input[:collection])
     assert_kind_of Hash, hash
-    assert_equal result, hash
+    assert_equal {}, hash
 
     input = {:key => '', :collection => [1,2,3]}
     hash = Meg::Jsontoolkit.relation_json(input[:key], input[:collection])
     assert_kind_of Hash, hash
-    assert_equal result, hash
+    assert_equal {}, hash
   end                                         
 
 end
