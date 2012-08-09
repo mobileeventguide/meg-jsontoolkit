@@ -4,16 +4,14 @@ require 'base64'
 
 require "meg-jsontoolkit/version"
 
-class String
-  def starts_with?(prefix)
-    prefix = prefix.to_s
-    self[0, prefix.length] == prefix
-  end
-end
-
 module Meg
   module Jsontoolkit
     class << self
+      def starts_with?(string, prefix)
+        prefix = prefix.to_s
+        string[0, prefix.length] == prefix
+      end
+
       def base64_encode_file(path)
         return unless path.is_a? String
 
@@ -25,7 +23,7 @@ module Meg
       end
 
       def url_with_asset_host(url, asset_host)
-        if url.starts_with? 'http'
+        if starts_with?(url, 'http')
           full_url = url
         else
           full_url = [asset_host, url].join('/') 
@@ -36,7 +34,7 @@ module Meg
       def color_with_pound(string)
         color = ''
         if string.is_a?(String) && !string.nil? && string != ''
-          color = string.starts_with?('#')? string : '#' + string
+          color = starts_with?(string, '#')? string : '#' + string
         end
         color
       end
