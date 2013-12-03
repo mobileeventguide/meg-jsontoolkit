@@ -17,7 +17,9 @@ module Meg
 
         if File.exists?(path) && !File.directory?(path)
           data = Base64.strict_encode64(open(path) { |io| io.read })
-          mime = IO.popen(["file", "--brief", "--mime-type", path], in: :close, err: :close).read.chomp
+          mime = IO.popen(["file", "--brief", "--mime-type", path], in: :close, err: :close) do |obj|
+            obj.read.chomp
+          end
           return "data:#{mime};base64,#{data}" unless data.empty?
         end
       end
@@ -26,7 +28,7 @@ module Meg
         if starts_with?(url, 'http')
           full_url = url
         else
-          full_url = [asset_host, url].join('/') 
+          full_url = [asset_host, url].join('/')
         end
         full_url
       end
@@ -62,7 +64,7 @@ module Meg
           hash[key] = collection
         end
         hash
-      end 
+      end
     end
   end
 end
